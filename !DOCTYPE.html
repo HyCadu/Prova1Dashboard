@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova UniSales - Matheus Colombo</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #0056b3;
+            --success: #28a745;
+            --error: #dc3545;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: #212529;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            border-left: 6px solid var(--accent);
+        }
+
+        h1 { margin: 0; font-size: 1.8rem; color: var(--primary); }
+        h2 { color: var(--primary); margin-top: 40px; border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        .meta-info { color: #6c757d; margin-top: 10px; font-size: 0.9rem; }
+
+        /* Quiz Styles */
+        .quiz-card {
+            background: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .option-btn {
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            font-size: 1rem;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .option-btn:hover:not(.disabled) { background-color: #e9ecef; border-color: var(--accent); }
+        
+        .option-btn.correct { background-color: #d4edda; border-color: var(--success); color: #155724; }
+        .option-btn.correct::after { content: " ✓"; font-weight: bold; }
+        
+        .option-btn.wrong { background-color: #f8d7da; border-color: var(--error); color: #721c24; }
+        .option-btn.wrong::after { content: " ✕"; font-weight: bold; }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        /* Discursivas Styles */
+        details {
+            background: var(--card-bg);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #dee2e6;
+        }
+
+        details summary {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        details summary:hover { background-color: #f8f9fa; }
+        details summary::after { content: "+"; font-size: 1.5rem; color: var(--accent); line-height: 1rem; }
+        details[open] summary::after { content: "-"; }
+
+        .answer-content {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+            background-color: #fff;
+        }
+
+        .handwritten-style {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Simula escrita à mão legível */
+            color: #2c3e50;
+            background: #fdfbf7; /* Cor de papel levemente amarelado */
+            padding: 15px;
+            border: 1px dashed #cbd5e0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+
+        .badge {
+            background: #6c757d; color: white; 
+            padding: 2px 8px; border-radius: 4px; 
+            font-size: 0.8rem; margin-right: 8px; vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>UniSales - Engenharia de Software</h1>
+        <div class="meta-info">
+            <strong>Disciplina:</strong> Projeto de Desenvolvimento de Dashboard Analítico<br>
+            <strong>Aluno:</strong> Matheus Colombo<br>
+            <strong>Nota:</strong> 19/20
+        </div>
+    </header>
+
+    <h2>Parte 1: Questões Objetivas (Minigame)</h2>
+    <p style="margin-bottom: 20px; color: #666;">Selecione a alternativa que corresponde à marcada corretamente na prova.</p>
+
+    <div class="quiz-card" id="q1">
+        <div class="question-text">
+            <span class="badge">1</span> O Power BI tem muitas funções, permitindo, dessa forma, que o usuário do negócio tenha mais conexão com seus dados e obtenha respostas mais rápidas e da melhor forma. Sobre o contexto de funções do Power BI, qual o principal objetivo da criação e da configuração de um dashboard? (1 ponto)
+        </div>
+        <div class="options">
+            <button class="option-btn" onclick="check(this, false, 'q1')">A. O principal objetivo é auxiliar nas edições de dados por meio do editor Query.</button>
+            <button class="option-btn" onclick="check(this, false, 'q1')">B. O principal objetivo é realizar a comparação de valores diante de suas métricas ao longo de determinado período.</button>
+            <button class="option-btn" onclick="check(this, false, 'q1')">C. O principal objetivo é a obtenção de dados por meio de uma página da Web pelo link de acesso.</button>
+            <button class="option-btn" onclick="check(this, true, 'q1')">E. O principal objetivo é facilitar a visualização e o entendimento das informações da organização, bem como facilitar as tomadas de decisões.</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="quiz-card" id="q2">
+        <div class="question-text">
+            <span class="badge">2</span> Analise as afirmações sobre o BI e julgue verdadeiro (V) ou falso (F):<br><br>
+            ( ) O BI abrange uma grande variedade de tecnologias e aplicativos para gerenciar parte do ciclo de vida dos dados.<br>
+            ( ) A implementação de BI em uma organização envolve a captura não apenas dos dados corporativos, mas também do conhecimento sobre os dados.<br>
+            ( ) O foco das ferramentas de BI está na automação operacional e no relatório.<br>
+            ( ) Existem somente três componentes básicos que todo ambiente de BI deve fornecer: banco de dados, consulta de dados e ferramentas de análise e de apresentação e visualização de dados.<br><br>
+            A sequência correta é: (1 ponto)
+        </div>
+        <div class="options">
+            <button class="option-btn" onclick="check(this, true, 'q2')">A. V, V, F, F.</button>
+            <button class="option-btn" onclick="check(this, false, 'q2')">B. F, F, V, F.</button>
+            <button class="option-btn" onclick="check(this, false, 'q2')">C. V, V, F, V.</button>
+            <button class="option-btn" onclick="check(this, false, 'q2')">D. V, V, F, V.</button>
+            <button class="option-btn" onclick="check(this, false, 'q2')">E. F, F, V, V.</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="quiz-card" id="q3">
+        <div class="question-text">
+            <span class="badge">3</span> O objetivo do BI ou inteligência de negócios consiste em possibilitar que os dados sejam acessados de forma interativa, permitindo a sua manipulação de modo a proporcionar que gestores e analistas sejam capazes de identificar vantagens competitivas para uma empresa, envolvendo tanto a busca por alternativas para solucionar um problema quanto a identificação por novas oportunidades de negócio. Para desenvolver um sistema BI, torna-se necessário conhecer a arquitetura BI e os principais componentes de um sistema BI. Sobre esses conceitos, é correto afirmar que: (1 ponto)
+        </div>
+        <div class="options">
+            <button class="option-btn" onclick="check(this, false, 'q3')">A. O componente Exploração de Dados realiza uma análise BI ativa, dispensando a intervenção de um analista ou gestor.</button>
+            <button class="option-btn" onclick="check(this, false, 'q3')">B. O componente Mineração de Dados executa uma análise BI passiva, necessitando da intervenção humana, como, por exemplo, dos analistas.</button>
+            <button class="option-btn" onclick="check(this, false, 'q3')">C. As ferramentas de extração e transformação de dados ETL processam informações oriundas do DW.</button>
+            <button class="option-btn" onclick="check(this, true, 'q3')">D. As metodologias, tais como a análise multidimensional ou a análise de séries temporais, são implementadas nos sistemas de informação.</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="quiz-card" id="q4">
+        <div class="question-text">
+            <span class="badge">4</span> O processo de tomada de decisão nas empresas e na nossa sociedade, em geral, está cada vez mais orientado a dados. Para fornecer as informações necessárias a essas atividades, a análise de dados é cada vez mais requisitada. De maneira a organizar essas atividades e ter um entendimento do fluxo de trabalho, alguns processos são definidos, como o de descoberta do conhecimento em banco de dados. Considerando o escopo da visualização de dados, identifique a alternativa correta para o processo que caracteriza seu fluxo (entrada, fases intermediárias e saída) e sua relação com outras áreas do conhecimento. (1 ponto)
+        </div>
+        <div class="options">
+            <button class="option-btn" onclick="check(this, true, 'q4')">A. Os processos de análise de dados têm características particulares, mas em comum todos têm o fato de iniciarem pelos dados e terminarem nos usuários.</button>
+            <button class="option-btn" onclick="check(this, false, 'q4')">B. Os processos de análise de dados têm fases distintas, mas em comum todos utilizam a visualização de dados.</button>
+            <button class="option-btn" onclick="check(this, false, 'q4')">C. Apesar de ser uma área multidisciplinar, a visualização de dados geralmente não faz parte de um processo maior do que esteja relacionado a outras áreas do conhecimento.</button>
+            <button class="option-btn" onclick="check(this, false, 'q4')">D. Por utilizar gráficos para exibir informações por meio de imagens, a visualização de dados segue o processo definido para computação gráfica.</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="quiz-card" id="q5">
+        <div class="question-text">
+            <span class="badge">5</span> A interface do usuário consiste em componentes, alguns dos quais lidam com dados que precisam ser inseridos, apresentados, monitorados, analisados e computados. Esses componentes da interface do usuário geralmente são inseridos por meio de caixas de diálogo, mas podem ser representações visuais dos dados para facilitar as seleções exigidas pelo usuário.<br>
+            Por exemplo, se tivermos dados da população de 15 cidades do Brasil, podemos estabelecer que o número correspondente ao total de habitantes para cada cidade aparecerá no eixo X, e considerando um objeto gráfico em forma de barra, cada barra apresentará uma cor diferente de acordo com a região na qual a cidade pertence.<br>
+            Qual etapa do processo de visualização de dados, descrita por Telea (2015), refere-se à descrição do exemplo? (1 ponto)
+        </div>
+        <div class="options">
+            <button class="option-btn" onclick="check(this, false, 'q5')">A. Importar.</button>
+            <button class="option-btn" onclick="check(this, false, 'q5')">B. Filtrar.</button>
+            <button class="option-btn" onclick="check(this, true, 'q5')">C. Mapear.</button>
+            <button class="option-btn" onclick="check(this, false, 'q5')">D. Tornar (renderizar).</button>
+            <button class="option-btn" onclick="check(this, false, 'q5')">E. Visualização.</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <h2>Parte 2: Questões Discursivas</h2>
+
+    <details>
+        <summary>
+            <span><span class="badge">6</span> Defina e diferencie os tipos de dados estruturados, semi-estruturados e não estruturados, destacando como cada categoria se organiza e é armazenada. Cite pelo menos um exemplo real de formato ou tecnologia associada a cada tipo. (3 pontos)</span>
+        </summary>
+        <div class="answer-content">
+            <div class="handwritten-style">
+Estruturados => Usado para conjuntos de dados com pouca ou nenhuma variação. Armazenado em tabelas. Ex: Excel.
+
+Semi-Estruturados => Usado para conjuntos de dados com um considerável volume de variação. Armazenagem mais complexa. Ex: JSON, XML, MongoDB.
+
+Não-Estruturados => Conjunto de dados com múltiplas variações e dinâmicas. Ex: áudios, vídeos.
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>
+            <span><span class="badge">7</span> Explique o que são métricas e indicadores-chave de desempenho (KPIs), destacando a diferença entre ambos e apresentando exemplos práticos de cada um em um contexto organizacional ou de projeto. (3 pontos)</span>
+        </summary>
+        <div class="answer-content">
+            <div class="handwritten-style">
+As Métricas são os dados brutos retirados de uma fonte de dados do projeto. Através das métricas é possível o levantamento de indicadores, entre eles os KPIS que visam analisar o desempenho do projeto frente às metas e objetivos.
+
+Exemplo de métrica: Total de vendas ou faturamento da campanha ou da taxa de conversão de clientes.
+
+Exemplos de KPI: Aumento / Diferença da taxa de conversão mensal, usada para medir o desempenho frente a meta de aumentar em 25% a taxa de conversão de novos clientes.
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>
+            <span><span class="badge">8</span> Descreva o processo de levantamento de métricas SMART, explicando o que representa cada elemento do acrônimo (Specific, Measurable, Achievable, Relevant, Time-bound) e como esses critérios auxiliam na criação de métricas e KPIs mais claros e mensuráveis dentro de um projeto. (3 pontos)</span>
+        </summary>
+        <div class="answer-content">
+            <div class="handwritten-style">
+As métricas são avaliadas para saber se se enquadram nos parâmetros para uma boa métrica. São esses parâmetros:
+
+S - Ter sentido e ser única / palpável.
+M - Ser capaz de avaliar progressos e variações.
+A - Possível de concluir.
+R - Deve haver e fazer parte do contexto.
+T - Deve ter um tempo limite.
+
+Seguindo esses parâmetros é possível levantar ótimas métricas e indicadores com visão para metas e objetivos.
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>
+            <span><span class="badge">9</span> A imagem apresenta duas formas de comunicar um mesmo dado estatístico. Analise criticamente e explique como a escolha da forma de apresentação pode induzir o leitor ao erro. Indique qual técnica de manipulação foi... (3 pontos)</span>
+        </summary>
+        <div class="answer-content">
+            <p><em>*Nota: A imagem do gráfico mostra "Houve aumento absurdo de 200% de ocorrências em Maio" vs "Houve aumento de 1 para 3 casos".</em></p>
+            <div class="handwritten-style">
+O uso da porcentagem nesse exemplo, traz o tom que a pessoa como os dados são apresentados, para induzir o leitor a decisão ou interpretação partidária.
+
+Em casos onde a base de amostra é pequena, a variação e o peso de cada amostra é grande, já que faz parte do todo, composto por um pequeno número. Assim, mesmo com um absoluto não tão grande, a variação, para que a diferença, foi absurda.
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>
+            <span><span class="badge">10</span> Os processos de análise de dados envolvem diversas etapas, e uma das mais importantes é a integração e centralização das informações provenientes de diferentes sistemas, setores e períodos. Essa centralização permite que os sistemas de apoio à decisão utilizem dados unificados para gerar análises mais consistentes. Explique qual tecnologia é responsável por centralizar os dados de vários sistemas de uma organização e descreva sua importância para o processo de análise e tomada de decisão. (3 pontos)</span>
+        </summary>
+        <div class="answer-content">
+            <div class="handwritten-style">
+A Data Warehouse é o "sistema" que guarda as informações de forma mais centralizada e tratada, onde os dados chegam através de um outro sistema, o ETL.
+
+O DW é importante pois facilita a análise e montagem de métricas e indicadores para o levantamento de metas e objetivos.
+Sem essa tecnologia, seria necessária a análise de dados brutos e altamente complexos, o que traria um maior custo para erros, apurações, afinal, disco é mais barato que processamento.
+            </div>
+        </div>
+    </details>
+
+</div>
+
+<script>
+    function check(btn, isCorrect, questionId) {
+        const card = document.getElementById(questionId);
+        const options = card.querySelectorAll('.option-btn');
+        const feedback = card.querySelector('.feedback');
+
+        if(btn.classList.contains('disabled')) return;
+
+        options.forEach(opt => {
+            opt.classList.add('disabled');
+            opt.style.cursor = 'default';
+        });
+
+        if(isCorrect) {
+            btn.classList.add('correct');
+            feedback.style.display = 'block';
+            feedback.style.backgroundColor = '#d4edda';
+            feedback.style.color = '#155724';
+            feedback.innerHTML = '<strong>Correto!</strong> Resposta alinhada com o gabarito da prova.';
+        } else {
+            btn.classList.add('wrong');
+            feedback.style.display = 'block';
+            feedback.style.backgroundColor = '#f8d7da';
+            feedback.style.color = '#721c24';
+            feedback.innerHTML = '<strong>Incorreto.</strong> Tente revisar os conceitos de BI e Data Warehouse.';
+        }
+    }
+</script>
+
+</body>
+</html>
